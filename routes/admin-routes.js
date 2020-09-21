@@ -4,14 +4,18 @@ const adminControllers = require("../controllers/admin-controller");
 
 const router = express.Router();
 
-router.get("/", adminControllers.getRooms);
+router.get("/rooms", adminControllers.getRooms);
 
-router.get("/:rid", adminControllers.getRoomsById);
+router.get("/rooms/:rid", adminControllers.getRoomsById);
 
-router.post("/", adminControllers.createRoom);
+router.post("/rooms", adminControllers.createRoom);
 
-router.patch("/:rid", adminControllers.updateRoomById);
+router.patch("/rooms/:rid", adminControllers.updateRoomById);
 
-router.delete("/:rid", adminControllers.deleteRoomById);
+router.delete("/rooms/:rid", adminControllers.deleteRoomById);
+
+router.get("/users", adminControllers.getUsers);
+
+// router.get("/users/:uid", adminControllers.getUser);
 
 module.exports = router;

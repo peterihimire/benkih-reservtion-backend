@@ -44,6 +44,15 @@ let DUMMY_ROOMS = [
   },
 ];
 
+const DUMMY_USERS = [
+  {
+    id: "u1",
+    name: "Peter Ihimire",
+    email: "peterihimire@gmail.com",
+    password: "123456",
+  },
+];
+
 // For getting all rooms
 const getRooms = (req, res, next) => {
   console.log("Get the room request");
@@ -158,8 +167,15 @@ const deleteRoomById = (req, res, next) => {
   res.json({ message: "Room successfully deleted.", DUMMY_ROOMS });
 };
 
+// For getting Users
+const getUsers = (req, res, next) => {
+  res.status(200);
+  res.json({ users: DUMMY_USERS });
+};
+
 exports.getRooms = getRooms;
 exports.getRoomsById = getRoomsById;
 exports.createRoom = createRoom;
 exports.updateRoomById = updateRoomById;
 exports.deleteRoomById = deleteRoomById;
+exports.getUsers = getUsers;

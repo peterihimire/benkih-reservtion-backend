@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 
 const roomsRoutes = require("./routes/rooms-routes");
 const adminRoutes = require("./routes/admin-routes");
+const usersRoutes = require("./routes/users-routes");
 
 const HttpError = require("./models/http-error");
 
@@ -13,8 +14,11 @@ app.use(bodyParser.json());
 // => /api/rooms/
 app.use("/api/rooms", roomsRoutes);
 
-// => /api/admin/rooms/
-app.use("/api/admin/rooms", adminRoutes);
+// => /api/admin/
+app.use("/api/admin", adminRoutes);
+
+// => /api/users/
+app.use("/api/users", usersRoutes);
 
 // Error handling for unregistered routes
 app.use((req, res, next) => {
