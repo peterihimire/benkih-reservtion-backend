@@ -1,5 +1,7 @@
 const express = require("express");
 
+const HttpError = require("../models/http-error");
+
 const router = express.Router();
 
 const DUMMY_ROOMS = [
@@ -63,12 +65,20 @@ router.get("/:rid", (req, res, next) => {
   //     .json({ message: "Could not find a room for the provided id" });
   // }
 
+  // // Using the HttpError model
+  // if (!room) {
+  //   return next(
+  //     new HttpError("Could not find a room for the provided id lol.", 404)
+  //   );
+  // }
+
   // Using the express error middleware
   if (!room) {
     const error = new Error("Could not find a room for the provided idd.");
     error.code = 404;
     return next(error); // used for asynchronous code
   }
+
   res.json({ room });
 });
 
