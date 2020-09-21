@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const HttpError = require("../models/http-error");
 
-const DUMMY_ROOMS = [
+let DUMMY_ROOMS = [
   {
     id: "r1",
     name: "single economy",
@@ -44,11 +44,13 @@ const DUMMY_ROOMS = [
   },
 ];
 
+// For getting all rooms
 const getRooms = (req, res, next) => {
   console.log("Get the room request");
   res.json({ rooms: DUMMY_ROOMS });
 };
 
+// For getting single room
 const getRoomsById = (req, res, next) => {
   const roomId = req.params.rid;
   const room = DUMMY_ROOMS.find((r) => {
@@ -72,6 +74,7 @@ const getRoomsById = (req, res, next) => {
 // function getRooms(){...}
 // const getRooms = function(){...}
 
+// For create room
 const createRoom = (req, res, next) => {
   const {
     name,
@@ -107,22 +110,52 @@ const createRoom = (req, res, next) => {
 
   res.status(201).json({ room: createdRoom });
 };
+
+// For update room
 const updateRoomById = (req, res, next) => {
   const roomId = req.params.rid;
+  const {
+    name,
+    slug,
+    type,
+    price,
+    size,
+    capacity,
+    pets,
+    breakfast,
+    featured,
+    description,
+    extras,
+  } = req.body;
 
-  const room = DUMMY_ROOMS.find((r) => {
-    r.id === roomId;
-  });
+  const updatedRoom = { ...DUMMY_ROOMS.find((r) => r.id === roomId) };
+  const placeIndex = DUMMY_ROOMS.findIndex((r) => r.id === roomId);
+  updatedRoom.name = name;
+  updatedRoom.slug = slug;
+  updatedRoom.type = type;
+  updatedRoom.price = price;
+  updatedRoom.size = size;
+  updatedRoom.capacity = capacity;
+  updatedRoom.pets = pets;
+  updatedRoom.breakfast = breakfast;
+  updatedRoom.featured = featured;
+  updatedRoom.description = description;
+  updatedRoom.extras = extras;
+
+  DUMMY_ROOMS[placeIndex] = updatedRoom;
+
+  res.status(200).json({ room: updatedRoom });
 };
 
+// For delete room
 const deleteRoomById = (req, res, next) => {
   const roomId = req.params.rid;
 
-  const room = DUMMY_ROOMS.filter((r) => {
+  DUMMY_ROOMS = DUMMY_ROOMS.filter((r) => {
     return r.id !== roomId;
   });
   res.status(200);
-  res.json({ message: "Room successfully deleted." });
+  res.json({ message: "Room successfully deleted.", DUMMY_ROOMS });
 };
 
 exports.getRooms = getRooms;
