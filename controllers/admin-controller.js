@@ -1,3 +1,47 @@
+const HttpError = require("../models/http-error");
+
+const DUMMY_ROOMS = [
+  {
+    id: "r1",
+    name: "single economy",
+    slug: "single-economy",
+    type: "single",
+    price: 100,
+    size: 200,
+    capacity: 1,
+    pets: false,
+    breakfast: false,
+    featured: false,
+    description:
+      "This is the description of this room one , which is a single economy.",
+    extras: [
+      "Plush pillows and breathable bed",
+      "Full-sized, pH-balanced toiletries",
+      "internet",
+    ],
+  },
+  {
+    id: "r2",
+    name: "double economy",
+    slug: "double-economy",
+    type: "single",
+    price: 200,
+    size: 400,
+    capacity: 2,
+    pets: true,
+    breakfast: false,
+    featured: true,
+    description:
+      "This is the description of this room two , which is a double economy.",
+    extras: [
+      "Plush pillows and breathable bed",
+      "Full-sized, pH-balanced toiletries",
+      "internet",
+      "free breakfast",
+    ],
+  },
+];
+
 const getRooms = (req, res, next) => {
   console.log("Get the room request");
   res.json({ rooms: DUMMY_ROOMS });
@@ -23,3 +67,8 @@ const getRoomsById = (req, res, next) => {
 
   res.json({ room }); // { room } => {room : room}
 };
+// function getRooms(){...}
+// const getRooms = function(){...}
+
+exports.getRooms = getRooms;
+exports.getRoomsById = getRoomsById;
