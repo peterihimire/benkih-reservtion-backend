@@ -8,4 +8,10 @@ router.get("/", adminControllers.getRooms);
 
 router.get("/:rid", adminControllers.getRoomsById);
 
+router.post("/", adminControllers.createRoom);
+
+router.patch("/:rid", adminControllers.updateRoomById);
+
+router.delete("/:rid", adminControllers.deleteRoomById);
+
 module.exports = router;

@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 const HttpError = require("../models/http-error");
 
 const DUMMY_ROOMS = [
@@ -70,5 +72,61 @@ const getRoomsById = (req, res, next) => {
 // function getRooms(){...}
 // const getRooms = function(){...}
 
+const createRoom = (req, res, next) => {
+  const {
+    name,
+    slug,
+    type,
+    price,
+    size,
+    capacity,
+    pets,
+    breakfast,
+    featured,
+    description,
+    extras,
+  } = req.body;
+  // const name = req.body.name;
+
+  const createdRoom = {
+    id: uuidv4(),
+    name,
+    slug,
+    type,
+    price,
+    size,
+    capacity,
+    pets,
+    breakfast,
+    featured,
+    description,
+    extras,
+  };
+
+  DUMMY_ROOMS.push(createdRoom);
+
+  res.status(201).json({ room: createdRoom });
+};
+const updateRoomById = (req, res, next) => {
+  const roomId = req.params.rid;
+
+  const room = DUMMY_ROOMS.find((r) => {
+    r.id === roomId;
+  });
+};
+
+const deleteRoomById = (req, res, next) => {
+  const roomId = req.params.rid;
+
+  const room = DUMMY_ROOMS.filter((r) => {
+    return r.id !== roomId;
+  });
+  res.status(200);
+  res.json({ message: "Room successfully deleted." });
+};
+
 exports.getRooms = getRooms;
 exports.getRoomsById = getRoomsById;
+exports.createRoom = createRoom;
+exports.updateRoomById = updateRoomById;
+exports.deleteRoomById = deleteRoomById;
