@@ -13,6 +13,10 @@ const DUMMY_USERS = [
 const signup = (req, res, next) => {
   const { name, email, password } = req.body;
 
+  const hasUser = DUMMY_USERS.find((u) => u.email === email);
+  if (hasUser) {
+    throw new HttpError("Could not create user , email already exist.", 422); // code 422 code used for invalid user input
+  }
   const createdUser = {
     id: uuidv4(),
     name,
@@ -36,6 +40,7 @@ const login = (req, res, next) => {
     ); // 401 means authentication failed
   }
   res.json({ message: "Yes, you are Logged In!" });
+  6;
 };
 
 exports.signup = signup;

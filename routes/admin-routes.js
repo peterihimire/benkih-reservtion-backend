@@ -1,4 +1,5 @@
 const express = require("express");
+const { check } = require("express-validator");
 
 const adminControllers = require("../controllers/admin-controller");
 
@@ -8,9 +9,41 @@ router.get("/rooms", adminControllers.getRooms);
 
 router.get("/rooms/:rid", adminControllers.getRoomsById);
 
-router.post("/rooms", adminControllers.createRoom);
+router.post(
+  "/rooms",
+  [
+    check("name").not().isEmpty(),
+    check("slug").not().isEmpty(),
+    check("type").not().isEmpty(),
+    check("price").isNumeric(),
+    check("size").isNumeric(),
+    check("capacity").isNumeric(),
+    check("pets").isBoolean(),
+    check("breakfast").isBoolean(),
+    check("featured").isBoolean(),
+    check("description").isLength({ min: 5 }),
+    check("extras").isArray(),
+  ],
+  adminControllers.createRoom
+);
 
-router.patch("/rooms/:rid", adminControllers.updateRoomById);
+router.patch(
+  "/rooms/:rid",
+  [
+    check("name").not().isEmpty(),
+    check("slug").not().isEmpty(),
+    check("type").not().isEmpty(),
+    check("price").isNumeric(),
+    check("size").isNumeric(),
+    check("capacity").isNumeric(),
+    check("pets").isBoolean(),
+    check("breakfast").isBoolean(),
+    check("featured").isBoolean(),
+    check("description").isLength({ min: 5 }),
+    check("extras").isArray(),
+  ],
+  adminControllers.updateRoomById
+);
 
 router.delete("/rooms/:rid", adminControllers.deleteRoomById);
 
