@@ -172,6 +172,9 @@ const updateRoomById = (req, res, next) => {
 const deleteRoomById = (req, res, next) => {
   const roomId = req.params.rid;
 
+  if (!DUMMY_ROOMS.find((r) => r.id === roomId)) {
+    throw new HttpError("Could not find a room for that id.", 404);
+  }
   DUMMY_ROOMS = DUMMY_ROOMS.filter((r) => {
     return r.id !== roomId;
   });
